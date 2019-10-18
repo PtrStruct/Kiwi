@@ -29,7 +29,6 @@
                                 CornerRadius="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
                                 HorizontalAlignment="Left"
                                 x:Name="ThumbCircle">
-                            
 
                             <Border.RenderTransform>
                                 <TranslateTransform/>
