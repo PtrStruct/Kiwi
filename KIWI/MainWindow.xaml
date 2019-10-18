@@ -1,0 +1,39 @@
+﻿<Window x:Class="KIWI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KIWI"
+        xmlns:kiwi="clr-namespace:KIWI.Attached_Dependency_Properties"
+        mc:Ignorable="d"
+        Title="KIWI" Height="450" Width="800"
+        Background="#2c3e50">
+    <Grid>
+
+
+        
+
+        <StackPanel VerticalAlignment="Center">
+
+            <Button Content="Button"
+                    Width="100"
+                    Height="25"
+                    Background="#2ecc71"
+                    kiwi:ButtonHelper.SecondaryColor="Orange"
+                    Style="{StaticResource ResourceKey=KiwiButton}"
+                    Margin="5"/>
+
+
+            <ToggleButton Width="50"
+                          x:Name="Toggle"
+                          Height="25"
+                          Style="{StaticResource KiwiToggleButton}"/>
+
+
+            <!--<TextBox IsEnabled="{Binding ElementName=Toggle, Path=IsChecked}"
+                     Width="100"/>-->
+
+        </StackPanel>
+
+    </Grid>
+</Window>
