@@ -1,27 +1,66 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converter="clr-namespace:KIWI.Converters">
+                    xmlns:converter="clr-namespace:KIWI.Converters"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <Style x:Key="KiwiToggleButton"
-       TargetType="{x:Type ToggleButton}">
+    <Style x:Key="KiwiToggleButton" TargetType="{x:Type ToggleButton}">
 
         <Style.Resources>
-            <Color x:Key="Color.Kiwi.PrimaryColor">#2ecc71</Color>
-            <Color x:Key="Color.Kiwi.SecondaryColor">#27ae60</Color>
+            <Color x:Key="Color.MyBtn.PrimaryColor">#2ecc71</Color>
+            <Color x:Key="Color.MyBtn.SecondaryColor">#27ae60</Color>
+            <!-- Aded some converters here -->
+            <converter:MultiMultiplierConverter x:Key="MultiMultiplierConverter"/>
+            <converter:OppositeConverter x:Key="OppositeConverter"/>
         </Style.Resources>
 
-
-
-
         <Setter Property="Template">
-
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <!-- Animation to the right -->
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <!-- Dont forget easing -->
+                                        <DoubleAnimation Storyboard.TargetProperty="X" Storyboard.TargetName="Proxy" To="1" Duration="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseInOut"/>
+                                            </DoubleAnimation.EasingFunction>
 
-                    <Grid>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
 
-                        <Border Width="50" Height="12" Background="White" x:Name="mainBorder" CornerRadius="6">
+                            <!-- Animation to the left -->
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <!-- Dont forget easing -->
+                                        <DoubleAnimation Storyboard.TargetProperty="X" Storyboard.TargetName="Proxy" To="0" Duration="0:0:0.3" >
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseInOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                    <Grid x:Name="ContainerGrid">
 
+                        <!-- Change the background here -->
+                        <Border Width="50" Height="12" x:Name="Border" Background="White" CornerRadius="6">
+                            <Border.Style>
+                                <Style>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True">
+                                            <Setter Property="Border.Background" Value="Orange"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
                         </Border>
 
                         <Border Width="25"
@@ -29,52 +68,39 @@
                                 CornerRadius="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
                                 HorizontalAlignment="Left"
                                 x:Name="ThumbCircle">
-
+                            <Border.Resources>
+                                <!-- Proxy object whose X property gets animated from 0 to 1. -->
+                                <!-- Could be any DependencyObject with a property of type double. -->
+                                <TranslateTransform x:Key="unusedKey" x:Name="Proxy"></TranslateTransform>
+                            </Border.Resources>
                             <Border.RenderTransform>
-                                <TranslateTransform/>
+                                <TransformGroup>
+                                    <!-- Main translation to move from one side of the grid to the other -->
+                                    <TranslateTransform>
+                                        <TranslateTransform.X>
+                                            <MultiBinding Converter="{StaticResource MultiMultiplierConverter}" ConverterParameter="2">
+                                                <Binding ElementName="Proxy" Path="X"></Binding>
+                                                <Binding ElementName="ContainerGrid" Path="ActualWidth"></Binding>
+                                            </MultiBinding>
+                                        </TranslateTransform.X>
+                                    </TranslateTransform>
+
+                                    <!-- Secondary translation to adjust to the actual width of the object to translate -->
+                                    <TranslateTransform>
+                                        <TranslateTransform.X>
+                                            <MultiBinding Converter="{StaticResource MultiMultiplierConverter}" ConverterParameter="2">
+                                                <Binding ElementName="Proxy" Path="X"></Binding>
+                                                <Binding ElementName="ThumbCircle" Path="ActualWidth" Converter="{StaticResource OppositeConverter}"></Binding>
+                                            </MultiBinding>
+                                        </TranslateTransform.X>
+                                    </TranslateTransform>
+                                </TransformGroup>
                             </Border.RenderTransform>
-
-
-                            <Border.Triggers>
-                                <EventTrigger RoutedEvent="PreviewMouseDown">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-
-
-                                            <!-- Dont forget easing -->
-                                            <DoubleAnimation Storyboard.TargetProperty="(RenderTransform).(TranslateTransform.X)"  Storyboard.TargetName="ThumbCircle" Duration="0:0:0.4" >
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuarticEase EasingMode="EaseInOut"/>
-                                                </DoubleAnimation.EasingFunction>
-                                                <DoubleAnimation.To>
-                                                    <MultiBinding>
-                                                        <MultiBinding.Converter>
-                                                            <converter:ToggleButtonMultiValueConverter />
-                                                        </MultiBinding.Converter>
-                                                        <Binding ElementName="ThumbCircle" Path="ActualWidth"/>
-                                                        <Binding ElementName="mainBorder" Path="ActualWidth"/>
-                                                    </MultiBinding>
-                                                </DoubleAnimation.To>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-
-                                </EventTrigger>
-                            </Border.Triggers>
                         </Border>
                     </Grid>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-
-        <Style.Triggers>
-            <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="Orange"/>
-            </Trigger>
-        </Style.Triggers>
-
     </Style>
 
 </ResourceDictionary>

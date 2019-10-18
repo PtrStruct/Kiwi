@@ -64,6 +64,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Attached Dependency Properties\TestBoxEx.cs" />
+    <Compile Include="Converters\MultiMultiplierConverter.cs" />
+    <Compile Include="Converters\OppositeConverter.cs" />
     <Compile Include="Converters\ToggleButtonMultiValueConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

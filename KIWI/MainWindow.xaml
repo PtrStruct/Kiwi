@@ -25,13 +25,11 @@
 
 
             <ToggleButton Width="50"
-                          x:Name="Toggle"
+                          x:Name="Test"
                           Height="25"
                           Style="{StaticResource KiwiToggleButton}"/>
 
 
-            <!--<TextBox IsEnabled="{Binding ElementName=Toggle, Path=IsChecked}"
-                     Width="100"/>-->
 
         </StackPanel>
 
