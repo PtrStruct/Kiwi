@@ -23,7 +23,7 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <!-- Dont forget easing -->
-                                        <DoubleAnimation Storyboard.TargetProperty="X" Storyboard.TargetName="Proxy" To="1" Duration="0:0:0.3">
+                                        <DoubleAnimation Storyboard.TargetProperty="X" Storyboard.TargetName="Proxy" To="1" Duration="0:0:0.12">
                                             <DoubleAnimation.EasingFunction>
                                                 <QuarticEase EasingMode="EaseInOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -38,7 +38,7 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <!-- Dont forget easing -->
-                                        <DoubleAnimation Storyboard.TargetProperty="X" Storyboard.TargetName="Proxy" To="0" Duration="0:0:0.3" >
+                                        <DoubleAnimation Storyboard.TargetProperty="X" Storyboard.TargetName="Proxy" To="0" Duration="0:0:0.12" >
                                             <DoubleAnimation.EasingFunction>
                                                 <QuarticEase EasingMode="EaseInOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -51,12 +51,21 @@
                     <Grid x:Name="ContainerGrid">
 
                         <!-- Change the background here -->
-                        <Border Width="50" Height="12" x:Name="Border" Background="White" CornerRadius="6">
+                        <Border Width="50" Height="12" x:Name="Border" CornerRadius="6">
+
                             <Border.Style>
-                                <Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Style.Setters>
+                                        <Setter Property="Background" Value="White"/>
+                                    </Style.Setters>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsChecked}" Value="True">
-                                            <Setter Property="Border.Background" Value="Orange"/>
+                                        <DataTrigger Binding="{Binding ElementName=Proxy, Path=X}" Value="1">
+                                            <Setter Property="Background" Value="#2ecc71"/>
+                                            <Setter Property="Effect" >
+                                                <Setter.Value>
+                                                    <DropShadowEffect ShadowDepth="0" Color="#2ecc71" BlurRadius="15" Direction="-90" />
+                                                </Setter.Value>
+                                            </Setter>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
