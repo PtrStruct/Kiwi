@@ -68,15 +68,16 @@
     <Compile Include="Converters\MultiMultiplierConverter.cs" />
     <Compile Include="Converters\OppositeConverter.cs" />
     <Compile Include="Converters\ToggleButtonMultiValueConverter.cs" />
+    <Compile Include="Helper\BrushAnimation.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Theme\CustomStyle.xaml">
+    <Page Include="Theme\KIWI.ButtonTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Theme\KIWI.ButtonTheme.xaml">
+    <Page Include="Theme\KIWI.ComboBoxTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

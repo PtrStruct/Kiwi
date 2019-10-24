@@ -3,5 +3,6 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="KIWI.ButtonTheme.xaml"/>
         <ResourceDictionary Source="KIWI.ToggleButtonTheme.xaml"/>
+        <ResourceDictionary Source="KIWI.ComboBoxTheme.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
